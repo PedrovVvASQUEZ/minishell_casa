@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarpent <acarpent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:27:28 by acarpent          #+#    #+#             */
-/*   Updated: 2024/10/01 16:21:24 by acarpent         ###   ########.fr       */
+/*   Updated: 2024/10/13 11:02:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,29 @@ void	del_node(t_env *env, t_env *delete)
 	}
 }
 
-void	ft_unset(t_token *tok, t_env *env)
+void	ft_unset(t_ms *ms)
 {
-	int		i;
+	t_token	*current;
 	t_env	*delete;
 
-	i = 0;
 	delete = NULL;
-	if (tok->next)
+	current = ms->tokens;
+	if (current->next)
 	{
-		tok = tok->next;
-		while (env)
+		current = current->next;
+		while (ms->env)
 		{
-			if (ft_strcmp(env->name, tok->value) == 0)
+			if (ft_strcmp(ms->env->name, ms->tokens->value) == 0)
 			{
-				del_node(env, delete);
+				del_node(ms->env, delete);
+				if (ms->envi)
+					ft_free_tab(ms->envi);
+				ms->envi = the_env(ms->env);
+				if (!ms->envi)
+					ms->envi = NULL;
 				break ;
 			}
-			env = env->next;
+			ms->env = ms->env->next;
 		}
 	}
 }

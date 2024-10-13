@@ -3,14 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:11:47 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/11 18:09:17 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:58:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	redirs_counter(t_token *tok)
+{
+	t_token	*current;
+	int		x;
+	
+	x = 0;
+	current = tok;
+	while (current && current->type != PIPE)
+	{
+		if (current->type == REDIR_IN || current->type == REDIR_OUT
+			|| current->type == APPEND || current->type == HERE_DOC)
+		{
+			x += 1;
+			current = current->next;
+		}
+		if (current)
+			current = current->next;
+	}
+	return (x);
+}
+
+t_redirs	*the_redirs(t_token *tok)
+{
+	t_token		*current;
+	t_redirs	*redirs;
+
+	current = tok;
+	redirs = NULL;
+	while (current && current->type != PIPE)
+	{
+		if (current->type == REDIR_IN || current->type == REDIR_OUT
+			|| current->type == APPEND || current->type == HERE_DOC)
+		{
+			add_redirs_node(&redirs, current);
+			current = current->next;
+		}
+		if (current)
+			current = current->next;
+	}
+	return (redirs);
+}
 
 int	cmd_counter(t_token *tok)
 {
@@ -21,7 +63,8 @@ int	cmd_counter(t_token *tok)
 	current = tok;
 	while (current && current->type != PIPE)
 	{
-		if (tok->type == CMD || tok->type == ARG || tok->type == WORD)
+		if (current->type == CMD || current->type == ARG
+			|| current->type == WORD)
 			x += 1;
 		current = current->next;
 	}
@@ -43,23 +86,29 @@ char	**the_cmds(t_token *tok)
 	{
 		if (current->type == CMD || current->type == ARG
 			|| current->type == WORD)
-			cmds[y] = ft_strdup(tok->value);
-		tok = tok->next;
+		{
+			cmds[y] = ft_strdup(current->value);
+			if (!cmds[y])
+				return (ft_free_tab(cmds), NULL);
+			y++;
+		}
+		current = current->next;
 	}
-	cmds[y] == NULL;
+	cmds[y] = NULL;
 	return (cmds);
 }
 
-t_cmdline	*parsing(t_ms *ms)
+t_cmdline	*the_cmdlines(t_ms *ms)
 {
 	t_cmdline	*cmdline;
-	t_token *current;
+	t_token		*current;
 
 	cmdline = NULL;
 	current = ms->tokens;
 	while (current)
 	{
-		add_cmdline_node(&cmdline, current);
+		add_cmdline_node(&ms->cmdlines, current);
+		display_cmdlines(ms->cmdlines);
 		while (current && current->type != PIPE)
 			current = current->next;
 		if (current)
@@ -68,13 +117,4 @@ t_cmdline	*parsing(t_ms *ms)
 			break ;
 	}
 	return (cmdline);
-}
-
-int	executor(t_ms *ms)
-{
-	if (ms->cmdline && !ms->cmdline->next && !ms->cmdline->prev)
-		ms->v_return = ft_exec(ms->cmdline);
-	else
-		ms->v_return = ft_pipe_exec(ms->cmdline);
-	return (ms->v_return);
 }

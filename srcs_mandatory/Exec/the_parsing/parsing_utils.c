@@ -12,23 +12,49 @@
 
 #include "minishell.h"
 
-void	init_redirs(t_redirs *redirs)
+int	env_counter(t_env *env)
 {
-	redirs->infile = NULL;
-	redirs->in_flag = false;
-	redirs->outfile = NULL;
-	redirs->out_flag = false;
-	redirs->out_trunc = false;
-	redirs->here_doc = NULL;
-	redirs->hd_flag = false;
+	t_env	*current;
+	int		x;
+
+	x = 0;
+	current = env;
+	while (current)
+	{
+		x += 1;
+		current = current->next;
+	}
+	return (x);
 }
 
-void	init_cmd(t_ms *ms)
+char	**the_env(t_env *env)
 {
-	ms->cmdline->cmd->tok = ms->tokens;
-	ms->cmdline->cmd->cmds = the_cmds(ms->tokens);
-	ms->cmdline->cmd->pipefd[0] = -1;
-	ms->cmdline->cmd->pipefd[1] = -1;
-	ms->cmdline->cmd->pid = NULL;
-	init_redirs(&ms->cmdline->cmd->redirs);
+	char	**envi;
+	int		y;
+
+	y = 0;
+	envi = ft_calloc(env_counter(env) + 1, sizeof(char *));
+	if (!envi)
+		return (NULL);
+	while (env)
+	{
+		if (env->equal_sign == 1)
+			envi[y] = ft_strjoin_equal(env->name, env->value);
+		else
+			envi[y] = ft_strdup(env->name);
+		y++;
+		env = env->next;
+	}
+	envi[y] = NULL;
+	return (envi);
+}
+
+void	init_cmd(t_cmdline *cmdline)
+{
+	cmdline->cmd->tok = NULL;
+	cmdline->cmd->cmds = NULL;
+	cmdline->cmd->pipefd[0] = -1;
+	cmdline->cmd->pipefd[1] = -1;
+	cmdline->cmd->pid = NULL;
+	cmdline->cmd->redirs = NULL;
 }

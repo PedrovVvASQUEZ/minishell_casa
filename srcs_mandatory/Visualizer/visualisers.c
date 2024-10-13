@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visualisers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:10 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/09 16:30:49 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/13 22:49:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,65 @@ void	display_envi(t_env *env)
 		printf("--------------------------------------------------\n");
 		envi = envi->next;
 	}
+}
+
+void	display_redirs(t_redirs *redirs)
+{
+	t_redirs	*current;
+
+	current = redirs;
+	while (current)
+	{
+		printf("--------------------------------------------------\n");
+		printf("infile: \033[0;36m %-20s \033[0m |\t \
+			outfile: \033[0;35m %-18s \033[0m |\t \
+			limiter: \033[0;34m %-18s \033[0m |\t \
+			in_flag: %d |\t out_flag: %d |\t out_app: %d |\t hd_flag: %d\n",
+			current->infile ? current->infile : ft_strdup("NULL"),
+			current->outfile ? current->outfile : ft_strdup("NULL"),
+			current->limiter ? current->limiter : ft_strdup("NULL"),
+			current->in_flag, current->out_flag, current->out_app, current->hd_flag);
+		printf("--------------------------------------------------\n");
+		current = current->next;
+	}
+}
+
+void	display_cmdlines(t_cmdline *cmdline)
+{
+	while (cmdline)
+	{
+		if (cmdline->cmd && cmdline->cmd->cmds)
+		{
+			printf("Command: \033[0;32m%s\033[0m\n", cmdline->cmd->cmds[0]);
+			printf("Arguments:\n");
+			for (int i = 0; cmdline->cmd->cmds[i]; i++)
+			{
+				printf("\033[0;33m%s\033[0m\n", cmdline->cmd->cmds[i]);
+			}
+			printf("\n");
+
+			printf("Redirections:\n");
+			display_redirs(cmdline->cmd->redirs);
+		}
+		else
+		{
+			printf("Invalid cmdline structure\n");
+		}
+
+		printf("--------------------------------------------------\n");
+		cmdline = cmdline->next;
+	}
+}
+
+void	display_env(char **envi)
+{
+	int	y;
+
+	y = 0;
+	while (envi[y])
+	{
+		printf("`%s`\n", envi[y]);
+		y++;
+	}
+	printf("----------------------------------------------------\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarpent <acarpent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 14:00:57 by acarpent          #+#    #+#             */
-/*   Updated: 2024/10/02 16:38:13 by acarpent         ###   ########.fr       */
+/*   Updated: 2024/10/13 11:03:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	builtins(t_ms *ms, t_token *tok)
 		else if (ft_strcmp(ms->tokens->value, "pwd") == 0)
 			ft_pwd();
 		else if (ft_strcmp(ms->tokens->value, "unset") == 0)
-			ft_unset(ms->tokens, ms->env);
+			ft_unset(ms);
 		else if (ft_strcmp(ms->tokens->value, "export") == 0)
 			ft_export(ms);
 	}

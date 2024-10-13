@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   the_programm.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:51:23 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/11 16:49:19 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:21:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ char	*prompt(t_ms *ms)
 	return (input);
 }
 
-
-
 t_ms	*init_ms(void)
 {
 	t_ms	*ms;
@@ -46,9 +44,10 @@ t_ms	*init_ms(void)
 		exit(1);
 	}
 	ms->prompt = NULL;
+	ms->envi = NULL;
 	ms->env = NULL;
 	ms->tokens = NULL;
-	ms->cmdline = NULL;
+	ms->cmdlines = NULL;
 	ms->v_return = 0;
 	ms->t_count = 0;
 	return (ms);
@@ -57,11 +56,11 @@ t_ms	*init_ms(void)
 t_ms	*init_program(char **env)
 {
 	t_ms	*ms;
-	int		sig_val;
+	// int		sig_val;
 
-	sig_val = SIGINT;
-	ft_sigint_setup();
-	ft_sigquit_setup();
+	// sig_val = SIGINT;
+	// ft_sigint_setup();
+	// ft_sigquit_setup();
 	ms = init_ms();
 	ms->env = init_env(env);
 	if (ms->env == NULL)
@@ -81,7 +80,8 @@ void	the_program(t_ms *ms)
 			break ;
 		if (!full_check(ms))
 			continue ;
-		handle_here_doc(ms->tokens);
+		// handle_here_doc(ms->tokens);
+		ms->cmdlines = the_cmdlines(ms);
 		// ms->v_return = executor(ms);
 		free_tokens(&ms->tokens);
 		free(ms->prompt);
@@ -89,5 +89,3 @@ void	the_program(t_ms *ms)
 	free_env(&ms->env);
 	free(ms->prompt);
 }
-
-// Ici -> tokenisation hear >>> parsing >>> exec (lexer)

@@ -29,7 +29,7 @@ t_cmdline *init_cmdline_node(void)
 		ft_putstr_fd("Error: failed to allocate memory for cmd", 2);
 		return (NULL);
 	}
-	init_cmd(new_node->cmd);
+	init_cmd(new_node);
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);
@@ -45,9 +45,9 @@ void add_cmdline_node(t_cmdline **cmdline, t_token *tok)
 	new_node = init_cmdline_node();
 	if (!new_node)
 		return ;
-	new_node->cmd = tok;
+	new_node->cmd->tok = tok;
 	new_node->cmd->cmds = the_cmds(tok);
-
+	new_node->cmd->redirs = the_redirs(tok);
 	if (*cmdline == NULL)
 	{
 		*cmdline = new_node;
@@ -75,7 +75,7 @@ void delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
 
 	if (node_to_del->prev != NULL)
 		node_to_del->prev->next = node_to_del->next;
-
+	clear_redirs_list(&node_to_del->cmd->redirs);
 	free(node_to_del->cmd);
 	free(node_to_del);
 }
@@ -89,9 +89,12 @@ void free_cmdline(t_cmdline **head)
 	while (current != NULL)
 	{
 		next = current->next;
+		clear_redirs_list(&current->cmd->redirs);
 		free(current->cmd);
 		free(current);
 		current = next;
 	}
 	*head = NULL;
 }
+
+// void	clear_cmd()
