@@ -56,5 +56,8 @@ void	init_cmd(t_cmdline *cmdline)
 	cmdline->cmd->pipefd[0] = -1;
 	cmdline->cmd->pipefd[1] = -1;
 	cmdline->cmd->pid = NULL;
+	cmdline->cmd->fd_in = -1;
+	cmdline->cmd->fd_out = -1;
+	cmdline->cmd->previous_fd = -1;
 	cmdline->cmd->redirs = NULL;
 }

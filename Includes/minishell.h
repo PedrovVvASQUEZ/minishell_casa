@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:22:22 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 19:16:01 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 21:14:59 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ typedef struct s_cmd
 	char		**cmds;
 	pid_t		pipefd[2];
 	int			*pid;
+	int			fd_in;
+	int			fd_out;
+	int			previous_fd;
 	t_redirs	*redirs;
 }				t_cmd;
 
@@ -248,26 +251,6 @@ void			papa_proces(pid_t pid, int pipefd[2]);
 void			read_until_limit(char *limiteur, int pipefd);
 void			start_pipe(char *limiteur);
 
-//-----Executioner functions-----//
-
-// void			exec_cleaner(t_ms *ms);
-// char			**find_infile(t_token *tok);
-// char			**find_outfile(t_token *tok);
-// char			**the_env(t_env *env);
-// char			**the_cmds(t_token *tok);
-// char			*cmd_path(char **envi, char *cmd);
-// char			*get_the_path(char **pathsss, char *cmd);
-// void			file_opener(t_ms *ms, int i_o);
-// int				exit_brr(int code);
-// void			child_process(t_ms *ms, int x);
-// void			cmd_exec(t_ms *ms, char *cmd);
-// void			init_pipe(t_ms *ms);
-// void			redirector(t_ms *ms, int x);
-// // int				wait_da_boy(t_pipe *p);
-// void			handle_exec_error(void);
-// int				executioner(t_ms *ms);
-// int				executor(t_ms *ms);
-
 //-------------Exec--------------//
 
 char			**the_env(t_env *env);
@@ -278,9 +261,16 @@ t_redirs		*the_redirs(t_token *tok);
 
 char			 **the_cmds(t_token *tok);
 void			init_cmd(t_cmdline *cmdline);
+void			clear_cmdlines(t_cmdline **head);
 void			add_cmdline_node(t_cmdline **cmdline, t_token *tok);
 t_cmdline		*the_cmdlines(t_ms *ms);
 
+void			handle_exec_error(void);
+void			redirector(t_cmdline *cmdline);
+int				wait_da_boy(t_cmdline *cmdline);
+void			ft_open_files(t_cmdline *cmdline);
+void			child_process(t_ms *ms);
+int				executioner(t_ms *ms);
 int				executor(t_ms *ms);
 
 #endif

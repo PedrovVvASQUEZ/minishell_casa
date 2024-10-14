@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:11:47 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 22:58:00 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 10:20:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ t_cmdline	*the_cmdlines(t_ms *ms)
 	while (current)
 	{
 		add_cmdline_node(&ms->cmdlines, current);
-		display_cmdlines(ms->cmdlines);
 		while (current && current->type != PIPE)
 			current = current->next;
 		if (current)
@@ -116,5 +115,6 @@ t_cmdline	*the_cmdlines(t_ms *ms)
 		if (!current)
 			break ;
 	}
+	display_cmdlines(ms->cmdlines);
 	return (cmdline);
 }

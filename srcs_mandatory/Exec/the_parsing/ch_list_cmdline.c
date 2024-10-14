@@ -80,7 +80,7 @@ void delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
 	free(node_to_del);
 }
 
-void free_cmdline(t_cmdline **head)
+void clear_cmdlines(t_cmdline **head)
 {
 	t_cmdline *current;
 	t_cmdline *next;
@@ -90,6 +90,7 @@ void free_cmdline(t_cmdline **head)
 	{
 		next = current->next;
 		clear_redirs_list(&current->cmd->redirs);
+		ft_free_tab(current->cmd->cmds);
 		free(current->cmd);
 		free(current);
 		current = next;

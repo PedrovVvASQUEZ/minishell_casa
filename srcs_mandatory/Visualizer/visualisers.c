@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 15:23:10 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 22:49:59 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 20:51:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	display_cmdlines(t_cmdline *cmdline)
 		{
 			printf("Command: \033[0;32m%s\033[0m\n", cmdline->cmd->cmds[0]);
 			printf("Arguments:\n");
-			for (int i = 0; cmdline->cmd->cmds[i]; i++)
+			for (int i = 1; cmdline->cmd->cmds[i]; i++)
 			{
 				printf("\033[0;33m%s\033[0m\n", cmdline->cmd->cmds[i]);
 			}

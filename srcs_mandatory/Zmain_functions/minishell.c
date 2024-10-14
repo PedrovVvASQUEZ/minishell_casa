@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:29:28 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/09/27 19:54:14 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/14 20:42:14 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,3 @@ int	main(int ac, char **av, char **env)
 		ft_putstr_fd("Arguments aren't allowed\n", 2);
 	return (0);
 }
-
-	// printf("Helo");
-	// return (0);
-
-	// acceper uniquement les '|' et '<' et '>' et '<<' et '>>'
-
-	// faire deux listes chaines : une pour les tokens
-	// et une autres pour les expands

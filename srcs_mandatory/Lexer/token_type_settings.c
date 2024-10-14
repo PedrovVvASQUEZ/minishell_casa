@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:57:14 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 20:43:31 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 20:50:52 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_token_type	da_tok(char *s, t_token *previous)
 		return (HERE_DOC);
 	else if (ft_strcmp(s, ">>") == 0)
 		return (APPEND);
-	else if (s[0] == '-')
+	else if (s[0] == ' ' && s[1] && s[1] == '-')
 		return (ARG);
 	else
 		return (word_type_token(previous));

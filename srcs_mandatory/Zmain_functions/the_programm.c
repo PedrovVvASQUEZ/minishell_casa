@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:51:23 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 19:21:35 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/14 21:29:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ t_ms	*init_program(char **env)
 		ft_putstr_fd("Error: couldn't allocate memory\n", 2);
 		exit(1);
 	}
+	ms->envi = the_env(ms->env);
+	if (ms->envi == NULL)
+	{
+		ft_putstr_fd("Error: couldn't allocate memory\n", 2);
+		exit(1);
+	}
 	return (ms);
 }
 
@@ -81,8 +87,7 @@ void	the_program(t_ms *ms)
 		if (!full_check(ms))
 			continue ;
 		// handle_here_doc(ms->tokens);
-		ms->cmdlines = the_cmdlines(ms);
-		// ms->v_return = executor(ms);
+		ms->v_return = executor(ms);
 		free_tokens(&ms->tokens);
 		free(ms->prompt);
 	}
