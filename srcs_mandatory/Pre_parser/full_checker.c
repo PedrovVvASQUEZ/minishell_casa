@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   full_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:44:59 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/14 20:52:36 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 20:04:08 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	full_check(t_ms *ms)
 	{
 		ms->tokens = lexer(ms->prompt);
 		expander(ms);
-		display_tokens(ms->tokens);
+		// display_tokens(ms->tokens);
 		return (true);
 	}
 }

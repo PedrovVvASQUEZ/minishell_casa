@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:47:02 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/14 22:46:37 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 19:53:44 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,49 @@
 
 int	executioner(t_ms *ms)
 {
-	int	x;
-	t_cmdline *head;
+	int			x;
+	t_cmdline	*head;
 
 	x = 0;
 	head = ms->cmdlines;
 	while (ms->cmdlines)
 	{
-		pipe(ms->cmdlines->cmd->pipefd);
-		ms->cmdlines->cmd->pid[x] = fork();
-		if (ms->cmdlines->cmd->pid[x] == -1)
+		pipe(ms->pipefd);
+		ms->pid[x] = fork();
+		if (ms->pid[x] == -1)
 			exit(1);
-		if (ms->cmdlines->cmd->pid[x] == 0)
+		if (ms->pid[x] == 0)
 			child_process(ms);
 		else
 		{
-			close(ms->cmdlines->cmd->pipefd[1]);
+			close(ms->pipefd[1]);
 			if (x > 0)
 				close(ms->cmdlines->cmd->previous_fd);
-			ms->cmdlines->cmd->previous_fd = ms->cmdlines->cmd->pipefd[0];
+			ms->cmdlines->cmd->previous_fd = ms->pipefd[0];
 		}
 		ms->cmdlines = ms->cmdlines->next;
 		x++;
 	}
-	return (wait_da_boy(head));
+	ms->cmdlines = head;
+	return (wait_da_boy(ms));
 }
 
 int	executor(t_ms *ms)
 {
 	int	v_return;
 
-	ms->cmdlines = the_cmdlines(ms);
-	precheck(ms->cmdlines);
+	the_cmdlines(ms);
+	display_cmdlines(ms->cmdlines);
+	ms->pid = malloc(sizeof(int) * cmdlines_counter(ms->cmdlines));
+	if (!ms->pid)
+	{
+		ft_putstr_fd("Error : malloc failed", 2);
+		return (1);
+	}
 	v_return = executioner(ms);
 	clear_cmdlines(&ms->cmdlines);
+	free(ms->pid);
+	close(ms->pipefd[0]);
+	close(ms->pipefd[1]);
 	return (v_return);
 }

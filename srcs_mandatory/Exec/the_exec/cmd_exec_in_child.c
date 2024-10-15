@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_in_child.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:38:24 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/14 20:46:31 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 17:53:04 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ void	cmd_exec(t_ms *ms, char *cmd)
 
 void	child_process(t_ms *ms)
 {
-	free(ms->cmdlines->cmd->pid);
-	redirector(ms->cmdlines);
+	redirector(ms);
 	ft_open_files(ms->cmdlines);
 	cmd_exec(ms, ms->cmdlines->cmd->cmds[0]);
 	exit(127);

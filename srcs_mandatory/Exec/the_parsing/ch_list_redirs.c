@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ch_list_redirs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:26:09 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/13 19:55:13 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 15:27:54 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	clear_redirs_list(t_redirs **redirs)
 	t_redirs	*next;
 
 	if (redirs == NULL || *redirs == NULL)
-		return;
+		return ;
 
 	current = *redirs;
 	while (current != NULL)

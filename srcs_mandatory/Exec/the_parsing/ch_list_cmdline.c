@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-t_cmdline *init_cmdline_node(void)
+t_cmdline	*init_cmdline_node(void)
 {
-	t_cmdline *new_node;
+	t_cmdline	*new_node;
 
 	new_node = (t_cmdline *)malloc(sizeof(t_cmdline));
 	if (!new_node)
@@ -35,10 +35,10 @@ t_cmdline *init_cmdline_node(void)
 	return (new_node);
 }
 
-void add_cmdline_node(t_cmdline **cmdline, t_token *tok)
+void	add_cmdline_node(t_cmdline **cmdline, t_token *tok)
 {
-	t_cmdline *new_node;
-	t_cmdline *last_node;
+	t_cmdline	*new_node;
+	t_cmdline	*last_node;
 
 	if (cmdline == NULL || tok == NULL)
 		return ;
@@ -63,7 +63,7 @@ void add_cmdline_node(t_cmdline **cmdline, t_token *tok)
 	}
 }
 
-void delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
+void	delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
 {
 	if (*head == NULL || node_to_del == NULL)
 		return ;
@@ -80,10 +80,10 @@ void delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
 	free(node_to_del);
 }
 
-void clear_cmdlines(t_cmdline **head)
+void	clear_cmdlines(t_cmdline **head)
 {
-	t_cmdline *current;
-	t_cmdline *next;
+	t_cmdline	*current;
+	t_cmdline	*next;
 
 	current = *head;
 	while (current != NULL)

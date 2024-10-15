@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:22:22 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/14 21:14:59 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 18:28:47 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ typedef struct s_cmd
 {
 	t_token		*tok;
 	char		**cmds;
-	pid_t		pipefd[2];
-	int			*pid;
 	int			fd_in;
 	int			fd_out;
 	int			previous_fd;
@@ -124,7 +122,7 @@ typedef struct s_cmd
 
 typedef struct s_cmdline
 {
-	t_cmd		*cmd;
+	t_cmd				*cmd;
 	struct s_cmdline	*next;
 	struct s_cmdline	*prev;
 }				t_cmdline;
@@ -133,6 +131,8 @@ typedef struct s_ms
 {
 	char		*prompt;
 	char		**envi;
+	pid_t		pipefd[2];
+	int			*pid;
 	t_env		*env;
 	t_token		*tokens;
 	t_cmdline	*cmdlines;
@@ -259,16 +259,17 @@ void			clear_redirs_list(t_redirs **redirs);
 void			add_redirs_node(t_redirs **redirs, t_token *tok);
 t_redirs		*the_redirs(t_token *tok);
 
-char			 **the_cmds(t_token *tok);
+char			**the_cmds(t_token *tok);
 void			init_cmd(t_cmdline *cmdline);
 void			clear_cmdlines(t_cmdline **head);
 void			add_cmdline_node(t_cmdline **cmdline, t_token *tok);
-t_cmdline		*the_cmdlines(t_ms *ms);
+void			the_cmdlines(t_ms *ms);
 
+int				cmdlines_counter(t_cmdline *cmdline);
 void			handle_exec_error(void);
-void			redirector(t_cmdline *cmdline);
-int				wait_da_boy(t_cmdline *cmdline);
 void			ft_open_files(t_cmdline *cmdline);
+void			redirector(t_ms *ms);
+int				wait_da_boy(t_ms *ms);
 void			child_process(t_ms *ms);
 int				executioner(t_ms *ms);
 int				executor(t_ms *ms);

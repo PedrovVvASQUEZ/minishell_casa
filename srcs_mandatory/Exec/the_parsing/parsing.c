@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:11:47 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/14 10:20:45 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 15:43:41 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	redirs_counter(t_token *tok)
 {
 	t_token	*current;
 	int		x;
-	
+
 	x = 0;
 	current = tok;
 	while (current && current->type != PIPE)
@@ -98,12 +98,12 @@ char	**the_cmds(t_token *tok)
 	return (cmds);
 }
 
-t_cmdline	*the_cmdlines(t_ms *ms)
+void	the_cmdlines(t_ms *ms)
 {
 	t_cmdline	*cmdline;
 	t_token		*current;
 
-	cmdline = NULL;
+	cmdline = ms->cmdlines;
 	current = ms->tokens;
 	while (current)
 	{
@@ -115,6 +115,4 @@ t_cmdline	*the_cmdlines(t_ms *ms)
 		if (!current)
 			break ;
 	}
-	display_cmdlines(ms->cmdlines);
-	return (cmdline);
 }

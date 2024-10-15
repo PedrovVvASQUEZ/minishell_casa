@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_n_assign.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:55:10 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/13 22:39:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 15:28:46 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ void	init_rs(t_redirs *redirs, t_token *tok)
 	redirs->hd_flag = false;
 	redirs->next = NULL;
 	redirs->prev = NULL;
-	assign_r_type(redirs, tok);	
+	assign_r_type(redirs, tok);
 }

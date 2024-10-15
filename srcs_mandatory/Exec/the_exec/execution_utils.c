@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:43:36 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/14 21:36:15 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/15 19:37:59 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redirector(t_cmdline *cmdline)
+void	redirector(t_ms *ms)
 {
-	if (cmdline && cmdline->prev)
+	if (ms->cmdlines && ms->cmdlines->prev)
 	{
-		dup2(cmdline->cmd->previous_fd, STDIN_FILENO);
-		close(cmdline->cmd->previous_fd);
+		dup2(ms->cmdlines->cmd->previous_fd, STDIN_FILENO);
+		close(ms->cmdlines->cmd->previous_fd);
 	}
-	if (cmdline && cmdline->next)
-		dup2(cmdline->cmd->pipefd[1], STDOUT_FILENO);
-	close(cmdline->cmd->pipefd[0]);
-	close(cmdline->cmd->pipefd[1]);
+	if (ms->cmdlines && ms->cmdlines->next)
+		dup2(ms->pipefd[1], STDOUT_FILENO);
+	close(ms->pipefd[0]);
+	close(ms->pipefd[1]);
 }
 
 void	handle_exec_error(void)
@@ -40,42 +40,45 @@ void	handle_exec_error(void)
 	else
 		exit(1);
 }
+
 int	cmdlines_counter(t_cmdline *cmdline)
 {
-	int	x;
+	t_cmdline	*current;
+	int			x;
 
 	x = 0;
-	while (cmdline)
+	current = cmdline;
+	while (current)
 	{
 		x += 1;
-		cmdline = cmdline->next;
+		current = current->next;
 	}
 	return (x);
 }
 
-int	wait_da_boy(t_cmdline *cmdline)
+int	wait_da_boy(t_ms *ms)
 {
 	int	x;
 	int	status;
 	int	*exit_status;
 
-	exit_status = malloc(cmdlines_counter(cmdline) * sizeof(int));
+	exit_status = malloc(sizeof(int) * cmdlines_counter(ms->cmdlines));
 	if (!exit_status)
 	{
 		ft_putstr_fd("Error: malloc failed\n", 2);
 		return (-1);
 	}
 	x = 0;
-	while (x < cmdlines_counter(cmdline))
+	while (x < cmdlines_counter(ms->cmdlines))
 	{
-		if (ft_strncmp(cmdline->cmd->cmds[0], "sleep", 5) == 0)
+		if (ft_strncmp(ms->cmdlines->cmd->cmds[0], "sleep", 5) == 0)
 			wait(&status);
 		else
-			waitpid(cmdline->cmd->pid[x], &status, 0);
+			waitpid(ms->pid[x], &status, 0);
 		exit_status[x] = status >> 8;
 		x++;
 	}
-	status = exit_status[cmdlines_counter(cmdline) - 1];
+	status = exit_status[cmdlines_counter(ms->cmdlines) - 1];
 	free(exit_status);
 	return (status);
 }
