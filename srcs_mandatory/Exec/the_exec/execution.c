@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:47:02 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/15 19:53:44 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:28:13 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	executor(t_ms *ms)
 
 	the_cmdlines(ms);
 	display_cmdlines(ms->cmdlines);
-	ms->pid = malloc(sizeof(int) * cmdlines_counter(ms->cmdlines));
+	ms->c_count = cmdlines_counter(ms->cmdlines);
+	ms->pid = malloc(sizeof(int) * ms->c_count);
 	if (!ms->pid)
 	{
 		ft_putstr_fd("Error : malloc failed", 2);

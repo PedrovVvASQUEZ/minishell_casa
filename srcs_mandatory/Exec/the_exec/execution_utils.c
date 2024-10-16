@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:43:36 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/15 19:37:59 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/16 18:44:09 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,32 @@ int	cmdlines_counter(t_cmdline *cmdline)
 
 int	wait_da_boy(t_ms *ms)
 {
-	int	x;
-	int	status;
-	int	*exit_status;
+	int			x;
+	int			status;
+	int			*exit_status;
+	t_cmdline	*current;
 
-	exit_status = malloc(sizeof(int) * cmdlines_counter(ms->cmdlines));
+	exit_status = malloc(sizeof(int) * ms->c_count);
 	if (!exit_status)
 	{
 		ft_putstr_fd("Error: malloc failed\n", 2);
 		return (-1);
 	}
+	current = ms->cmdlines;
 	x = 0;
-	while (x < cmdlines_counter(ms->cmdlines))
+	while (x < ms->c_count && current)
 	{
+		printf("SIUUUUUUU\n");
 		if (ft_strncmp(ms->cmdlines->cmd->cmds[0], "sleep", 5) == 0)
 			wait(&status);
 		else
 			waitpid(ms->pid[x], &status, 0);
-		exit_status[x] = status >> 8;
+		exit_status[x] = WEXITSTATUS(status);
+		current = current->next;
 		x++;
 	}
-	status = exit_status[cmdlines_counter(ms->cmdlines) - 1];
+	status = exit_status[ms->c_count - 1];
+	printf("%d\n", status);
 	free(exit_status);
 	return (status);
 }

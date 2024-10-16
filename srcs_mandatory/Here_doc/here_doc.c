@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarpent <acarpent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:14:55 by acarpent          #+#    #+#             */
-/*   Updated: 2024/10/08 14:45:31 by acarpent         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:05:31 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 // 		ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
 // 		ft_putstr_fd(limiter, 2);
 // 		ft_putstr_fd("')\n", 2);
+// 		free(lc);
 // 		return (false);
 // 	}
 // 	return (true);
@@ -76,12 +77,14 @@
 // 	{
 // 		perror("pipe");
 // 		close_pipe(pipefd[0], pipefd[1]);
+// 		return ;
 // 	}
 // 	pid = fork();
 // 	if (pid == -1)
 // 	{
 // 		perror("fork");
 // 		close_pipe(pipefd[0], pipefd[1]);
+// 		return ;
 // 	}
 // 	else if (pid == 0)
 // 	{
@@ -102,7 +105,7 @@
 // 	{
 // 		if (tok->type == HERE_DOC && !tok->next)
 // 		{
-// 			ft_putstr_fd("minishell: ", 2);
+// 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 // 			ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 // 			return ;
 // 		}
@@ -116,10 +119,10 @@
 // 		}
 // 		else if (tok->type == HERE_DOC && tok->next->type != LIMITER)
 // 		{
-// 			ft_putstr_fd("minishell: ", 2);
-// 			ft_putstr_fd("syntax error near unexpected token '", 2);
-// 			ft_putstr_fd(tok->next->value, 2);
-// 			ft_putstr_fd("'\n", 2);
+// 			ft_putstr_fd("minishell: ", STDERR_FILENO);
+// 			ft_putstr_fd("syntax error near unexpected token '", STDERR_FILENO);
+// 			ft_putstr_fd(tok->next->value, STDERR_FILENO);
+// 			ft_putstr_fd("'\n", STDERR_FILENO);
 // 			return ;
 // 		}
 // 	}

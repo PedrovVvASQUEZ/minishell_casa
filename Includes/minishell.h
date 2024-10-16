@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:22:22 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/15 18:28:47 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:24:30 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ typedef struct s_ms
 	t_token		*tokens;
 	t_cmdline	*cmdlines;
 	int			v_return;
-	int			t_count;
+	int			c_count;
 }				t_ms;
 
 /************************/
