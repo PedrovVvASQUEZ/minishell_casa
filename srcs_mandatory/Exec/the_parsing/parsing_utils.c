@@ -53,8 +53,5 @@ void	init_cmd(t_cmdline *cmdline)
 {
 	cmdline->cmd->tok = NULL;
 	cmdline->cmd->cmds = NULL;
-	cmdline->cmd->fd_in = -1;
-	cmdline->cmd->fd_out = -1;
-	cmdline->cmd->previous_fd = -1;
 	cmdline->cmd->redirs = NULL;
 }

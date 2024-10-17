@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:28:01 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/16 17:04:11 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:12:14 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ void	redirect_and_close(int fd, int std_fd)
 	}
 }
 
+void	_maybe_fd_closing(int fd)
+{
+	if (fd != -1)
+		close(fd);
+}
+
 void	in_file_opener(t_cmdline *cmdline)
 {
 	t_redirs	*current;
@@ -36,8 +42,7 @@ void	in_file_opener(t_cmdline *cmdline)
 	{
 		if (current->in_flag == true)
 		{
-			if (last_fd_in != -1)
-				close(last_fd_in);
+			_maybe_fd_closing(last_fd_in);
 			if (access(current->infile, F_OK) != 0)
 			{
 				perror(current->infile);
@@ -66,8 +71,7 @@ void	outfile_opener(t_cmdline *cmdline)
 	{
 		if (current->out_flag == true || current->out_app == true)
 		{
-			if (last_fd_out != -1)
-				close(last_fd_out);
+			_maybe_fd_closing(last_fd_out);
 			if (current->out_flag == true)
 				last_fd_out = open(current->outfile,
 						O_WRONLY | O_CREAT | O_TRUNC, 0644);

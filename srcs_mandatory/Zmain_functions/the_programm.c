@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:51:23 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/16 17:26:33 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:46:48 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_ms	*init_ms(void)
 	ms->v_return = 0;
 	ms->c_count = 0;
 	ms->pid = NULL;
+	ms->previous_fd = -1;
 	ms->pipefd[0] = -1;
 	ms->pipefd[1] = -1;
 	return (ms);

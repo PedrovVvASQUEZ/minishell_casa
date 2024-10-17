@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 15:22:22 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/16 17:24:30 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:56:32 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,22 @@ typedef struct s_exp
 	bool	in_double_quote;
 }				t_exp;
 
+typedef struct s_hw
+{
+	int		i;
+	char	quote;
+	bool	in_quotes;
+	char	*tmp;
+}				t_hw;
+
+typedef struct s_wdb
+{
+	int			x;
+	int			status;
+	int			*exit_status;
+	t_cmdline	*current;
+}				t_wdb;
+
 typedef enum s_token_type
 {
 	CMD,
@@ -114,9 +130,6 @@ typedef struct s_cmd
 {
 	t_token		*tok;
 	char		**cmds;
-	int			fd_in;
-	int			fd_out;
-	int			previous_fd;
 	t_redirs	*redirs;
 }				t_cmd;
 
@@ -133,6 +146,7 @@ typedef struct s_ms
 	char		**envi;
 	pid_t		pipefd[2];
 	int			*pid;
+	int			previous_fd;
 	t_env		*env;
 	t_token		*tokens;
 	t_cmdline	*cmdlines;
@@ -176,6 +190,7 @@ bool			q_check(char *s);
 bool			is_quoted(char *s, int index);
 bool			c_check(char *s);
 bool			shit_check_1(char *s);
+bool			_redirs_checker(t_ms *ms);
 bool			full_check(t_ms *ms);
 
 //---------Env funtions----------//

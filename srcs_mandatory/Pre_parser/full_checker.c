@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:44:59 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/15 20:04:08 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 17:05:54 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,15 @@ bool	full_check(t_ms *ms)
 	{
 		ms->tokens = lexer(ms->prompt);
 		expander(ms);
-		// display_tokens(ms->tokens);
-		return (true);
+		if (_redirs_checker(ms) == false)
+		{
+			ft_putstr_fd(
+				"MYSHELL: syntax error near unexpected token `newline'\n",
+				2);
+			ms->v_return = 2;
+			return (false);
+		}
+		else
+			return (true);
 	}
 }

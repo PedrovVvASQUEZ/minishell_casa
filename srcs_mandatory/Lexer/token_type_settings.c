@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type_settings.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 15:57:14 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/14 20:50:52 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/17 18:52:03 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token_type	word_type_token(t_token *previous)
 	else if (previous != NULL && previous->type == REDIR_IN)
 		return (INFILE);
 	else if (previous != NULL && (previous->type == REDIR_OUT
-		|| previous->type == APPEND))
+			|| previous->type == APPEND))
 		return (OUTFILE);
 	else if (previous != NULL && previous->type == HERE_DOC)
 		return (LIMITER);

@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 15:44:04 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/03 16:28:38 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:51:20 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,110 +90,105 @@ t_env	*find_node(char *s, t_env *env)
 	return (NULL);
 }
 
-/**************************************************************************************************************************************/
+/*char	*get_env_value(t_env *env, char *name)
+{
+	while (env)
+	{
+		if (strcmp(env->name, name) == 0)
+			return (env->value);
+		env = env->next;
+	}
+	return ("");
+}
 
-// char	*get_env_value(t_env *env, char *name)
-// {
-// 	while (env)
-// 	{
-// 		if (strcmp(env->name, name) == 0)
-// 			return (env->value);
-// 		env = env->next;
-// 	}
-// 	return ("");
-// }
+void	int_to_str(int num, char *str)
+{
+	int	i;
+	int	temp_num;
+	int	len;
 
-// void	int_to_str(int num, char *str)
-// {
-// 	int	i;
-// 	int	temp_num;
-// 	int	len;
-
-// 	temp_num = num;
-// 	len = 0;
-// 	if (num == 0)
-// 	{
-// 		len = 1;
-// 	}
-// 	else
-// 	{
-// 		while (temp_num)
-// 		{
-// 			len++;
-// 			temp_num /= 10;
-// 		}
-// 	}
-// 	str[len] = '\0';
-// 	i = len - 1;
-// 	while (i >= 0)
-// 	{
-// 		str[i--] = (num % 10) + '0';
-// 		num /= 10;
-// 	}
-// }
+	temp_num = num;
+	len = 0;
+	if (num == 0)
+	{
+		len = 1;
+	}
+	else
+	{
+		while (temp_num)
+		{
+			len++;
+			temp_num /= 10;
+		}
+	}
+	str[len] = '\0';
+	i = len - 1;
+	while (i >= 0)
+	{
+		str[i--] = (num % 10) + '0';
+		num /= 10;
+	}
+}
 
 
-// char	*replace_substring(const char *str, const char *old, const char *new)
-// {
-// 	char	*result;
-// 	int		i;
-// 	int		count;
-// 	int		new_len;
-// 	int		old_len;
+char	*replace_substring(const char *str, const char *old, const char *new)
+{
+	char	*result;
+	int		i;
+	int		count;
+	int		new_len;
+	int		old_len;
 
-// 	count = 0;
-// 	new_len = strlen(new);
-// 	old_len = strlen(old);
-// 	for (i = 0; str[i] != '\0'; i++)
-// 	{
-// 		if (strstr(&str[i], old) == &str[i])
-// 		{
-// 			count++;
-// 			i += old_len - 1;
-// 		}
-// 	}
-// 	result = (char *)malloc(i + count * (new_len - old_len) + 1);
-// 	if (!result)
-// 	{
-// 		perror("malloc");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	return (result);
-// }
+	count = 0;
+	new_len = strlen(new);
+	old_len = strlen(old);
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (strstr(&str[i], old) == &str[i])
+		{
+			count++;
+			i += old_len - 1;
+		}
+	}
+	result = (char *)malloc(i + count * (new_len - old_len) + 1);
+	if (!result)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	return (result);
+}
 
-// char	*replace_substring_wrapper(const char *str,
-// 			const char *old, const char *new)
-// {
-// 	char	*result;
+char	*replace_substring_wrapper(const char *str,
+			const char *old, const char *new)
+{
+	char	*result;
 
-// 	result = replace_substring(str, old, new);
-// 	replace_substring_content(result, str, old, new);
-// 	return (result);
-// }
+	result = replace_substring(str, old, new);
+	replace_substring_content(result, str, old, new);
+	return (result);
+}
 
-// void	replace_substring_content(char *result, const char *str,
-// 			const char *old, const char *new)
-// {
-// 	int	i;
-// 	int	new_len;
-// 	int	old_len;
+void	replace_substring_content(char *result, const char *str,
+			const char *old, const char *new)
+{
+	int	i;
+	int	new_len;
+	int	old_len;
 
-// 	i = 0;
-// 	new_len = strlen(new);
-// 	old_len = strlen(old);
-// 	while (*str)
-// 	{
-// 		if (strstr(str, old) == str)
-// 		{
-// 			strcpy(&result[i], new);
-// 			i += new_len;
-// 			str += old_len;
-// 		}
-// 		else
-// 			result[i++] = *str++;
-// 	}
-// 	result[i] = '\0';
-// }
-
-/**************************************************************************************************************************************/
-
+	i = 0;
+	new_len = strlen(new);
+	old_len = strlen(old);
+	while (*str)
+	{
+		if (strstr(str, old) == str)
+		{
+			strcpy(&result[i], new);
+			i += new_len;
+			str += old_len;
+		}
+		else
+			result[i++] = *str++;
+	}
+	result[i] = '\0';
+}*/

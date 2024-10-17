@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexing.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 17:35:23 by pgrellie          #+#    #+#             */
-/*   Updated: 2024/10/13 15:27:05 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/17 18:33:11 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,30 @@ void	handle_separator(char *s, int *x, t_token **tok)
 
 void	handle_word(char *s, int *x, t_token **tok)
 {
-	int		i;
-	char	quote;
-	bool	in_quotes;
-	char	*tmp;
+	t_hw	hw;
 
-	i = *x;
-	in_quotes = false;
+	hw.i = *x;
+	hw.in_quotes = false;
 	while (s[*x] && !is_space(s[*x])
-		&& (in_quotes || !is_separator(s[*x], s[*x + 1])))
+		&& (hw.in_quotes || !is_separator(s[*x], s[*x + 1])))
 	{
 		if (is_quote(s[*x]))
 		{
-			quote = s[*x];
-			in_quotes = !in_quotes;
+			hw.quote = s[*x];
+			hw.in_quotes = !hw.in_quotes;
 			*x += 1;
-			while (s[*x] && s[*x] != quote)
+			while (s[*x] && s[*x] != hw.quote)
 				*x += 1;
-			if (s[*x] == quote)
-				in_quotes = !in_quotes;
+			if (s[*x] == hw.quote)
+				hw.in_quotes = !hw.in_quotes;
 		}
 		*x += 1;
 	}
-	tmp = ft_substr(s, i, *x - i);
-	if (!tmp)
+	hw.tmp = ft_substr(s, hw.i, *x - hw.i);
+	if (!hw.tmp)
 		return ;
-	add_token(tok, tmp);
-	free(tmp);
+	add_token(tok, hw.tmp);
+	free(hw.tmp);
 }
 
 void	butcher(char *s, t_token **tok)

@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:43:36 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/16 18:44:09 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 18:59:48 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	redirector(t_ms *ms)
 {
 	if (ms->cmdlines && ms->cmdlines->prev)
 	{
-		dup2(ms->cmdlines->cmd->previous_fd, STDIN_FILENO);
-		close(ms->cmdlines->cmd->previous_fd);
+		dup2(ms->previous_fd, STDIN_FILENO);
+		close(ms->previous_fd);
 	}
 	if (ms->cmdlines && ms->cmdlines->next)
 		dup2(ms->pipefd[1], STDOUT_FILENO);
@@ -58,32 +58,29 @@ int	cmdlines_counter(t_cmdline *cmdline)
 
 int	wait_da_boy(t_ms *ms)
 {
-	int			x;
-	int			status;
-	int			*exit_status;
-	t_cmdline	*current;
+	t_wdb	w;
 
-	exit_status = malloc(sizeof(int) * ms->c_count);
-	if (!exit_status)
+	if (ms->c_count <= 0)
+		return (0);
+	w.exit_status = ft_calloc(ms->c_count, sizeof(int));
+	if (!w.exit_status)
 	{
 		ft_putstr_fd("Error: malloc failed\n", 2);
 		return (-1);
 	}
-	current = ms->cmdlines;
-	x = 0;
-	while (x < ms->c_count && current)
+	w.current = ms->cmdlines;
+	w.x = 0;
+	while (w.x < ms->c_count && w.current)
 	{
-		printf("SIUUUUUUU\n");
 		if (ft_strncmp(ms->cmdlines->cmd->cmds[0], "sleep", 5) == 0)
-			wait(&status);
+			wait(&w.status);
 		else
-			waitpid(ms->pid[x], &status, 0);
-		exit_status[x] = WEXITSTATUS(status);
-		current = current->next;
-		x++;
+			waitpid(ms->pid[w.x], &w.status, 0);
+		w.exit_status[w.x] = WEXITSTATUS(w.status);
+		w.current = w.current->next;
+		w.x++;
 	}
-	status = exit_status[ms->c_count - 1];
-	printf("%d\n", status);
-	free(exit_status);
-	return (status);
+	w.status = w.exit_status[ms->c_count - 1];
+	free(w.exit_status);
+	return (w.status);
 }

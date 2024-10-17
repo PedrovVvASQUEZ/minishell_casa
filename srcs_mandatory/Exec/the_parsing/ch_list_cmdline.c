@@ -69,10 +69,8 @@ void	delete_cmdline_node(t_cmdline **head, t_cmdline *node_to_del)
 		return ;
 	if (*head == node_to_del)
 		*head = node_to_del->next;
-
 	if (node_to_del->next != NULL)
 		node_to_del->next->prev = node_to_del->prev;
-
 	if (node_to_del->prev != NULL)
 		node_to_del->prev->next = node_to_del->next;
 	clear_redirs_list(&node_to_del->cmd->redirs);
@@ -97,5 +95,3 @@ void	clear_cmdlines(t_cmdline **head)
 	}
 	*head = NULL;
 }
-
-// void	clear_cmd()

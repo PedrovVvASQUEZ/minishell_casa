@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 14:47:02 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/16 17:28:13 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:45:42 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	executioner(t_ms *ms)
 		{
 			close(ms->pipefd[1]);
 			if (x > 0)
-				close(ms->cmdlines->cmd->previous_fd);
-			ms->cmdlines->cmd->previous_fd = ms->pipefd[0];
+				close(ms->previous_fd);
+			ms->previous_fd = ms->pipefd[0];
 		}
 		ms->cmdlines = ms->cmdlines->next;
 		x++;

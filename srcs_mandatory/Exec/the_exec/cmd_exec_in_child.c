@@ -6,7 +6,7 @@
 /*   By: pgrellie <pgrellie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 12:38:24 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/15 17:53:04 by pgrellie         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:51:25 by pgrellie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,11 @@ void	cmd_exec(t_ms *ms, char *cmd)
 	{
 		execve(cmd, ms->cmdlines->cmd->cmds, ms->envi);
 		ft_free_tab(ms->cmdlines->cmd->cmds);
+		ft_putstr_fd("3\n", 2);
 		free(cmd);
+		ft_putstr_fd("4\n", 2);
 		handle_exec_error();
+		ft_putstr_fd("5\n", 2);
 	}
 	else
 	{
